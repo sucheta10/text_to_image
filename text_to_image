@@ -1,0 +1,16 @@
+!pip install diffusers transformers gradio accelerate
+from diffusers import StableDiffusionPipeline
+import matplotlib.pyplot as plt
+import torch
+pipe = StableDiffusionPipeline.from_pretrained("dreamlike-art/dreamlike-diffusion-1.0")
+# Moves the entire pipeline (model and other components) to the GPU for faster computation.
+# The "cuda" argument specifies that the model should be moved to a CUDA-enabled GPU.
+pipe = pipe.to("cuda")
+prompt = "a skull wearing a sunglass with headphones with a vibrant colorful background"
+#pipe(prompt): This calls the pipeline with the provided text prompt, initiating the image generation process.
+# The pipeline processes the prompt through the Stable Diffusion model, generating one or more images.
+# .images[0] - This selects the first image from the generated images.
+image = pipe(prompt).images[0]
+print("[PROMPT]: ",prompt)
+plt.imshow(image)
+plt.axis('off')
